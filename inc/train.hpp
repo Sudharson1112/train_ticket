@@ -45,7 +45,7 @@ class train_instance_class : public train
                 vector<int>middle_breath;
                 vector<int>upper_breath;
                 pair<vector<int>,string>pair1;
-                vector <passenger *>waiting_list_passenger;
+                vector <pair<passenger *,string>> waiting_list_passenger;
                  
                  vector<int>sitting;
                     vector<int>lower_berth_sleeper;
@@ -101,12 +101,13 @@ class train_instance_class : public train
                     }
 };
 
+void passenger_waiting_list();
+void check_waiting_lists(train_instance_class* train_p);
 
  void get_vector(vector <int> new_vector);
  void train_instance(int n);
  void class_seats(int train_id);
 int price_calculation(train_instance_class * pointer,string train_class, int ticket_count);
-void passenger_waiting_list(int);
 
 tuple<pair<string,int>,passenger *>* preference_ac_2nd(train_instance_class * train_pointer,string,bool);
 tuple<pair<string,int>,passenger *>* preference_ac_1st(train_instance_class * train_pointer,string);

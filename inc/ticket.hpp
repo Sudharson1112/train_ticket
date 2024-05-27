@@ -64,5 +64,6 @@ class ticket
 void show_stations();
 void booking();
  void ticket_cancellation(int);
+ extern void check_waiting_lists(train_instance_class* train_p);
  //tree * insert_in_tree(tree * root_address,user * user_address);
 #endif

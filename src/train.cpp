@@ -51,74 +51,11 @@ void train_instance(int n)
                 b=1;
                 o++; 
             }
-            /*
-            int c=1;
-            while(getline(my_s,word,'-'))
-            {
-                if(c==5)
-                {
-                    train_parameters[2]= stoi(word);
-                    cout<<"arr"<<train_parameters[2]<<endl;
-                }
-                else if(c==6)
-                {
-                    train_parameters[3]=stoi(word);
-                    cout<<"rea"<<train_parameters[3]<<endl;
-                }
-                c++;
-            }*/
         }
         count++;
     }
-    /*
-        while(getline(file_output,line))
-        {
-        if(count2==7+n)
-        {
-            istringstream my_s(line);
-            string word;
-            while(getline(my_s,word,'-'))
-            {
-                istringstream my_word(word);
-                string last_word;
-                int c=0;
-                bool b1= false;
-                bool b2=false;
-                while (getline(my_word,last_word,','))
-                {
-                    if(last_word == user_logged_in_pointer->user_source)
-                    {
-                        b1=true;
-                    }
-                    if(b1)
-                    {
-                        getline(my_word, last_word, ',');
-                        cout<<last_word<<endl;
-                        train_parameters[2]=last_word;
-                        b2=true;
-                    }
-                    if(b2)
-                    {
-                        sr_km=stoi(last_word);
-                    }
-                }
-                    if(last_word==user_logged_in_pointer->user_destination)
-                    {
-                        c++;
-                        getline(my_word, last_word, ',');
-                        cout<<last_word<<endl;
-                        train_parameters[3]=last_word;
-                        if(c==3)
-                        {
-                            des_km=stoi(last_word);
-                        }
-                    }
-                }  
-            }           
-        }*/
     cout<<"sd: "<<train_parameters[0]<<endl;
      auto it = train_map.find(g_date);
-    // cout<<g_date<<endl;
     if(it == train_map.end())
     {
         train_instance_class * train_instance_vector1=new train_instance_class(stoi(train_parameters[0]),train_parameters[1],user_logged_in_pointer->user_source,user_logged_in_pointer->user_destination,train_parameters[2],train_parameters[3]);
@@ -126,7 +63,6 @@ void train_instance(int n)
         auto itr = train_map.find(g_date);
         train_instance_vector = itr->second;
         itr->second->push_back(train_instance_vector1);
-        //train_instance_vector.push_back(train_instance_vector1);
     }
     else
     {
@@ -206,6 +142,7 @@ tuple<pair<string,int>,passenger *>* preference_ac_2nd(train_instance_class * tr
         }
         if(b3 && b4)
         {
+            train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"ac_2nd"));
             passenger_vector.push_back(make_pair(new_passenger,"ac_2nd"));
             return nullptr; 
         }
@@ -229,6 +166,7 @@ tuple<pair<string,int>,passenger *>* preference_ac_2nd(train_instance_class * tr
         if(b3 && b4)
         {
             passenger_vector.push_back(make_pair(new_passenger,"ac_2nd"));
+            train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"ac_2nd"));
             return nullptr; 
         }
         if(!b2)
@@ -270,6 +208,7 @@ tuple<pair<string,int>,passenger *>* preference_ac_1st(train_instance_class * tr
     }
     if(!b1)
     {
+        train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"ac_1st"));
         passenger_vector.push_back(make_pair(new_passenger,"ac_1st"));
         return nullptr; 
     }
@@ -308,6 +247,7 @@ if(train_pointer->sitting.size())
 }
 if(!b1)
 {
+    train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"sitting"));
     passenger_vector.push_back(make_pair(new_passenger,"sitting"));
     return nullptr; 
 }
@@ -371,6 +311,7 @@ tuple<pair<string,int>,passenger *>* preferences(train_instance_class * train_po
             }
             if(b4 && b5 && b6)
             {
+                train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"sleeper")); 
                 passenger_vector.push_back(make_pair(new_passenger,"sleeper")); 
                 return nullptr; 
             }
@@ -394,6 +335,7 @@ tuple<pair<string,int>,passenger *>* preferences(train_instance_class * train_po
                 }
                 if(b4 && b5 && b6)
                 {
+                    train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"sleeper"));
                     passenger_vector.push_back(make_pair(new_passenger,"sleeper")); 
                     return nullptr; 
                 }
@@ -417,6 +359,7 @@ tuple<pair<string,int>,passenger *>* preferences(train_instance_class * train_po
                 }
                 if(b4 && b5 && b6)
                 {
+                    train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"sleeper"));
                     passenger_vector.push_back(make_pair(new_passenger,"sleeper"));
                     return nullptr; 
                 }    
@@ -449,6 +392,7 @@ tuple<pair<string,int>,passenger *>* preferences(train_instance_class * train_po
                 }
                 if(b4 && b5 && b6)
                 {
+                    train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"ac_3rd"));
                     passenger_vector.push_back(make_pair(new_passenger,"ac_3rd"));
                     return nullptr; 
                 }
@@ -472,6 +416,7 @@ tuple<pair<string,int>,passenger *>* preferences(train_instance_class * train_po
                 }
                 if(b4 && b5 && b6)
                 {
+                    train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"ac_3rd"));
                     passenger_vector.push_back(make_pair(new_passenger,"ac_3rd"));
                     return nullptr; 
                 }
@@ -495,6 +440,7 @@ tuple<pair<string,int>,passenger *>* preferences(train_instance_class * train_po
                 }     
                 if (b4 && b5 && b6) 
                 {
+                    train_pointer->waiting_list_passenger.push_back(make_pair(new_passenger,"ac_3rd"));
                     passenger_vector.push_back(make_pair(new_passenger,"ac_3rd"));
                     return nullptr; 
                 }
@@ -1005,119 +951,174 @@ cout<<"Enter number of tickets"<<endl;
 }
                                                                  
                                         
-void passenger_waiting_list(int train_id)
+void passenger_waiting_list()
 {
-    train * train_point=NULL;
-    for (int i=0;i<train_instance_vector->size();i++)
+    vector<train_instance_class*> *tr;
+    int date;
+        int month;
+        re1:
+    cout<<"enter the date"<<endl;
+    getline(cin,checks);
+    if(is_num(checks))
     {
-        if((*train_instance_vector)[i]->get_train_id()==train_id)
+        date = stoi(checks);
+    }
+    else
+    {
+        cout<<"Invalid input"<<endl;
+        goto re1;
+    }
+    re2:
+    cout<<"enter month"<<endl;
+    getline(cin,checks);
+    if(is_num(checks))
+    {
+        month = stoi(checks);
+    }
+    else
+    {
+        cout<<"Invalid input"<<endl;
+        goto re2; 
+    }
+    time_t t =time(nullptr);
+    tm* now = localtime(&t);
+    if((month<=now->tm_mon+4 ) && (month==now->tm_mon+1 ? ((date >= now->tm_mday ? true: false)): true )&& (date <= 31) && (date > 0))
+    {
+        string dates;
+        dates = to_string(date)+to_string(month);
+        tr= train_map[dates];
+        if(!tr)
         {
-            train_point=(*train_instance_vector)[i];
+            cout<<"Not available";
+            return;
         }
     }
-    cout<<"there are"<<passenger_vector.size()<<"waiting lists"<<endl;
-    if(passenger_vector.size()==0)
+    else
+    {
+    cout<<"invalid month"<<endl;
+    }
+    int train_id;
+    re3:
+    cout<<"Enter train id"<<endl;
+    getline(cin,checks);
+    if(is_num(checks))
+    {
+        train_id = stoi(checks);
+    }
+    else
+    {
+        cout<<"Invalid input"<<endl;
+        goto re3; 
+    }
+    train_instance_class* train_point = nullptr;
+    for (int i=0;i<(*tr).size();i++)
+    {
+        if((*tr)[i]->get_train_id()==train_id)
+        {
+            train_point=(*tr)[i];
+        }
+    }
+    if(!train_point)
+    {
+        cout<<"not available"<<endl;
+    }
+    cout<<"there are"<<train_point->waiting_list_passenger.size()<<"waiting lists"<<endl;
+}
+void check_waiting_lists(train_instance_class* train_p)
+{
+    if(!train_p->waiting_list_passenger.size())
     {   
         return;
     }
     else
     {
-        if (passenger_vector.size()!=0)
+        for (int i=0;i<train_p->waiting_list_passenger.size();i++)
         {
-            for (int i=0;i<train_instance_vector->size();i++)
-            {
-                if ((*train_instance_vector)[i]==train_point)
-                {
-                    for(int i=0;i<passenger_vector.size();i++)
+            
+                    if(train_p->waiting_list_passenger[i].second=="sleeper")
                     {
-                        if(passenger_vector[i].second=="sleeper")
+                        if(train_p->lower_berth_sleeper.size()!=0)
                         {
-                            if((*train_instance_vector)[i]->lower_berth_sleeper.size()!=0)
-                            {
-                                passenger* ps;
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                ticket_instances.push_back(ticket_point);
-                                ticket_point->passenger_pointer=passenger_vector[i].first;
-                                break;
-                            }
-                            else if(((*train_instance_vector)[i]->middle_berth_sleeper.size()!=0))
-                            {
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                      ticket_instances.push_back(ticket_point);
-                                      ticket_point->passenger_pointer=passenger_vector[i].first;
-                                      break;
-                            }
-                            else if((((*train_instance_vector)[i]->upper_berth_sleeper.size()!=0)))
-                            {
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                      ticket_instances.push_back(ticket_point);
-                                      ticket_point->passenger_pointer=passenger_vector[i].first;
-                                      break;
-                            }
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,0);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                            ticket_instances.push_back(ticket_point);
+                            ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                            return;
                         }
-                        if(passenger_vector[i].second=="ac_3rd")
+                        else if((train_p->middle_berth_sleeper.size()!=0))
                         {
-                            if((*train_instance_vector)[i]->lower_berth_ac_3rd.size()!=0)
-                            {
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                      ticket_instances.push_back(ticket_point);
-                                      ticket_point->passenger_pointer=passenger_vector[i].first;
-                                      break;
-                            }
-                            else if(((*train_instance_vector)[i]->middle_berth_ac_3rd.size()!=0))
-                            { 
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                      ticket_instances.push_back(ticket_point),ticket_point->passenger_pointer=passenger_vector[i].first;
-                                      break;
-                            }
-                            else if((((*train_instance_vector)[i]->upper_berth_ac_3rd.size()!=0)))
-                            {
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                      ticket_instances.push_back(ticket_point);ticket_point->passenger_pointer=passenger_vector[i].first;
-                                      break;
-                            }
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,0);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                                    ticket_instances.push_back(ticket_point);
+                                    ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                                    return;
                         }
-                        if(passenger_vector[i].second=="ac_2nd")
+                        else if(((train_p->upper_berth_sleeper.size()!=0)))
                         {
-                            if((*train_instance_vector)[i]->lower_berth_ac_2nd.size())
-                            {
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                      ticket_instances.push_back(ticket_point);ticket_point->passenger_pointer=passenger_vector[i].first;
-                                      break;
-                            }
-                            else if(((*train_instance_vector)[i]->upper_berth_ac_2nd.size()!=0))
-                            {
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                      ticket_instances.push_back(ticket_point);ticket_point->passenger_pointer=passenger_vector[i].first;
-                                      break;
-                            }
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,1);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                                    ticket_instances.push_back(ticket_point);
+                                    ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                                    return;
                         }
-                        if(passenger_vector[i].second=="ac_1st")
-                        {
-                            if((*train_instance_vector)[i]->ac_1st.size()!=0)
-                            {
-                                int fare =price_calculation((train_instance_class*)train_point,passenger_vector[i].second,1);
-                                ticket * ticket_point=new ticket((train_instance_class*)train_point,passenger_vector[i].second,fare,passenger_vector[i].first);
-                                      ticket_instances.push_back(ticket_point);
-                                      ticket_point->passenger_pointer=passenger_vector[i].first;
-                                      break;
-                            }
-                        }
-  
                     }
+                    if(train_p->waiting_list_passenger[i].second=="ac_3rd")
+                    {
+                        if(train_p->lower_berth_ac_3rd.size()!=0)
+                        {
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,1);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                                    ticket_instances.push_back(ticket_point);
+                                    ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                                    return;
+                        }
+                        else if((train_p->middle_berth_ac_3rd.size()!=0))
+                        { 
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,1);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                                    ticket_instances.push_back(ticket_point),ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                                    return;
+                        }
+                        else if(((train_p->upper_berth_ac_3rd.size()!=0)))
+                        {
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,1);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                                    ticket_instances.push_back(ticket_point);ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                                    return;
+                        }
+                    }
+                    if(train_p->waiting_list_passenger[i].second=="ac_2nd")
+                    {
+                        if(train_p->lower_berth_ac_2nd.size())
+                        {
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,1);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                                    ticket_instances.push_back(ticket_point);ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                                    continue;
+                        }
+                        else if((train_p->upper_berth_ac_2nd.size()!=0))
+                        {
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,1);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                                    ticket_instances.push_back(ticket_point);ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                                    return;
+                        }
+                    }
+                    if(train_p->waiting_list_passenger[i].second=="ac_1st")
+                    {
+                        if(train_p->ac_1st.size()!=0)
+                        {
+                            int fare =price_calculation(train_p,train_p->waiting_list_passenger[i].second,1);
+                            ticket * ticket_point=new ticket(train_p,train_p->waiting_list_passenger[i].second,fare,train_p->waiting_list_passenger[i].first);
+                                    ticket_instances.push_back(ticket_point);
+                                    ticket_point->passenger_pointer=train_p->waiting_list_passenger[i].first;
+                                    return;
+                        }
+                    }
+
                 }
             }
         }
-    }
-}
 
 
 
