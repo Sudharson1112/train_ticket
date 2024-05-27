@@ -1,14 +1,14 @@
-// #include"main.hpp"
-//#include"user.hpp"
-extern tree *root_node;
-extern User *head_1;
-extern User *head_2;
-extern User *head_3;
-extern User *head_4;
-extern User *head_5;
-extern User *head_6;
-extern User *head_7;
-extern User *head_8;
+
+#include"user.hpp"
+struct tree *root_node;
+struct User *head_1;
+struct User *head_2;
+struct User *head_3;
+struct User *head_4;
+struct User *head_5;
+struct User *head_6;
+struct User *head_7;
+struct User *head_8;
 int user::vol_int=20190000;
 user * user_logged_in_pointer=nullptr;
 
@@ -94,7 +94,7 @@ void  insert(user * user_address)
                         head_1=store(head_1,user_address);
                         cout<<head_1<<"head pointer------------------------"<<endl;
 
-                        cout<<head_1<<"head"<<endl;;
+                        cout<<head_1<<"head"<<endl;
                     }
                 
                     else
@@ -163,36 +163,45 @@ void creator()
     string gender;
     string password;
     cout<<"Enter your name(first letter caps):"<<endl;
-    cin>>name;
+    getline(cin,name);
+    re:
     cout<<"Enter your age:"<<endl;
-    cin>>age;
+    getline(cin,checks);
+    if(is_num(checks))
+    {
+        age = stoi(checks);
+    }
+    else
+    {
+        cout<<"Invalid input"<<endl;
+        goto re;
+    }
     cout<<"Enter gender(full small letters):"<<endl;
-    cin>>gender;
+    getline(cin,gender);
     cout<<"Set a password:"<<endl;
-    cin>>password;
+    getline(cin,password);
     user *user_pointer = new user(name,age,gender,password);
     insert(user_pointer);
 }
 
 
-bool check(User * address,int * ur_id)
+bool check(User * address,int * ur_id,string * pass)
 {
     User * temp=address;
-    bool s=false;
+    // bool s=false;
     while(temp!=NULL)
     {
-        if(temp->instance->user_id==*ur_id)
+        if(temp->instance->user_id==*ur_id && temp->instance->user_password == *pass)
         {
             user_logged_in_pointer=temp->instance;
             // cout<<temp->instance->user_id;
-            s=true;
+            return true;
             break;
         }
         temp=temp->next;
     }
-    return s;
+    return false;
 }
-
 
 bool login()
 {
@@ -200,30 +209,41 @@ bool login()
     string password;
     int ur_id;
     cout<<"enter the name"<<endl;
-    cin>>name;
+    getline(cin,name);
+    re:
     cout<<"enter the user id"<<endl;
-    cin>>ur_id;
+    getline(cin,checks);
+    if(is_num(checks))
+    {
+        ur_id = stoi(checks);
+    }
+    else
+    {
+        cout<<"Invalid input"<<endl;
+        goto re;
+    }
     cout<<"enter the password"<<endl;
-    cin>>password;
+    getline(cin,password);
     bool p=false;
 
     if (name[0]>=65 and name[0]<=77)
     {
-        bool s=(check(head_1,&ur_id)||check(head_2,&ur_id)||check(head_3,&ur_id)||check(head_4,&ur_id));
-        if (s)
+        bool s=(check(head_1,&ur_id,&password)||check(head_2,&ur_id,&password)||check(head_3,&ur_id,&password)||check(head_4,&ur_id,&password));
+        if(s)
         {
             p=true;
         }
     }
     else
     {
-        bool s=(check(head_5,&ur_id)||check(head_6,&ur_id)||check(head_7,&ur_id)||check(head_8,&ur_id));
+        bool s=(check(head_5,&ur_id,&password)||check(head_6,&ur_id,&password)||check(head_7,&ur_id,&password)||check(head_8,&ur_id,&password));
         if(s)
         {
             p=true;
         }
     }
     return p;
+}
 
 
 

@@ -1,11 +1,9 @@
-//#ifndef USER_HPP
-//#define USER_HPP
-
-#include<iostream>
-using namespace std;
- #include "ticket.hpp"
-
-
+#ifndef USER_HPP
+#define USER_HPP
+#include"header.hpp"
+extern string checks;
+extern bool is_num(string&);
+class ticket;
 class user
 {
     public:
@@ -51,6 +49,9 @@ class passenger
 public:
             string passenger_name;
             int passenger_age;
+            string preference;
+			string passenger_source;
+			string passenger_destination;
             ticket * passenger_ticket_pointer;
             passenger(string name,int age)
             {
@@ -58,7 +59,14 @@ public:
             passenger_age=age;
             passenger_ticket_pointer=NULL;
             }
-            }
+};
+void creator();
+tree * create(tree * address);
+tree * create_tree(tree * address);
+User* store(User* address, user* user_address);
+void  insert(user * user_address);
+bool check(User * address,int * ur_id,string *);
+bool  login();
 
 #endif
 

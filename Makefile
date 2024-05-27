@@ -25,4 +25,6 @@ $(EXEC): $(OBJS)
 	
 	
 clean:
-	rm -f $(OBJDIR)/*.o $(EXEC) $(output)
+	rm -f $(OBJDIR)/*.o $(EXEC) $(outputi)
+target:
+	$(CC) $(SRCDIR)/*.cpp -I$(INCDIR) -g 2 > any.txt 
